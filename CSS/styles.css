@@ -39,3 +39,9 @@ section {
     text-align: center;
     left: 100px;
 }
+
+#allProductTable{
+    text-align: center;
+    margin-left: 325px;
+    display: none;
+}
