@@ -40,8 +40,12 @@ section {
     left: 100px;
 }
 
-#allProductTable{
+#allProductTable {
     text-align: center;
     margin-left: 325px;
+    display: none;
+}
+
+#categorySearchDDL {
     display: none;
 }

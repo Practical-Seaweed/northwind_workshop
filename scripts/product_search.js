@@ -23,12 +23,16 @@ function showTable(){
 function checkOptions() {
     let value = document.querySelector("#productsSearchDDL").value;
 
+    let categorySearchDDL  = document.querySelector("#categorySearchDDL");
+
     if (value === "viewAll") {
         getViewAllData()
         showTable()
         console.log("you chose the viewAll option"); 
     } else if (value === "category"){
         // getCategoryData(); // [ dont have this yet ]
+        getByCategories()
+        categorySearchDDL.style.display = "block";
         console.log("you chose the category option")
     } else {
         if(value === ""){
@@ -75,3 +79,37 @@ async function makeViewAllDataTable(products) {
         console.error(`Error making data table: ${error.message}`);
     }
 }
+
+
+// [ here is where ill make my search by category ]
+
+async function getByCategories(){
+
+    try {
+        let response = await fetch('http://localhost:8081/api/categories');
+        if (!response.ok){
+            throw new Error("failed to fetch all categories");
+        }
+        let data = await response.json();
+        populateCategories(data);
+    }catch (error){
+        console.error(`Error fetching CategoriesData: ${error.message}`);
+    }
+
+}
+
+function populateCategories(categories) {
+    let categorySearchDDL = document.querySelector("#categorySearchDDL");
+    categorySearchDDL.innerHTML = "";
+
+    categories.forEach(category => {
+        let option = document.createElement("option");
+        option.value = category.categoryId;
+        option.textContent = category.name;
+        categorySearchDDL.appendChild(option);
+    });
+
+    // Log the populated categories
+}
+
+
