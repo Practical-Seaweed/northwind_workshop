@@ -30,10 +30,10 @@ function checkOptions() {
     if (value === "viewAll") {
         getViewAllData();
         showTable();
-        categorySearchDDL.style.display = "none"; // Hide the category dropdown
+        categorySearchDDL.style.display = "none"; // [ this will hide the category dropdown when i choose viewAll ]
         console.log("you chose the viewAll option");
     } else if (value === "category") {
-        // getCategoryData(); // [ dont have this yet ]
+        // getCategoryData(); // [ dont have this yet BUT NOW I DO HAAH! ]
         getCategories();
         categorySearchDDL.style.display = "block";
         console.log("you chose the category option");
@@ -79,6 +79,10 @@ async function getViewAllData() {
             throw new Error("Failed to fetch allProductsData");
         }
         let data = await response.json();
+
+        // [ this should sort it alphabetical thank you geeksforgeeks! ]
+        data.sort((a, b) => a.productName.localeCompare(b.productName));
+
         // [ I want to make it so if the viewAll option from the select is chosen to show data ]
         makeDataTable(data); // [ this makes my data ]
     } catch (error) {
@@ -98,7 +102,7 @@ async function makeDataTable(products) {
                 <td>${product.productName}</td>
                 <td>${product.unitPrice}</td>
                 <td>${product.unitsInStock}</td>
-                <td>${product.categoryId}</td>
+                <td><a href="./product_details.html?productId=${product.productId}" target="_blank">Show Details</a></td>
                 <td>${product.supplier}</td>
                 <td>${product.discounted ? 'Yes' : 'No'}</td>
             `;
@@ -127,6 +131,7 @@ async function getCategories() {
 
 }
 
+// [ this should show the names pop up in the second dropdown ]
 function populateCategories(categories) {
     let categorySearchDDL = document.querySelector("#categorySearchDDL");
     categorySearchDDL.innerHTML = "";

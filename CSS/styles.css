@@ -48,3 +48,7 @@ section {
 #categorySearchDDL {
     display: none;
 }
+
+#overallCard {
+    text-align: center;
+}
